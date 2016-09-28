@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorActivityBg">#f7f7f7</color>
+
+    <color name="colorButtonBlue">#2da5e1</color>
+    <color name="colorTextBlue">#2da5e1</color>
+    <color name="colorTextGreen">#32be64</color>
+    <color name="colorTextWihte">#fff</color>
+    <color name="colorTextBlueDark">#056eb9</color>
+    <color name="colorTextBlueLight">#2da5e1</color>
+    <color name="colorTextGray">#999</color>
+    <color name="colorTextGrayDark">#666</color>
+    <color name="colorTextBlack">#333</color>
+    <color name="colorTextRed">#fa3c37</color>
+
+    <color name="colorWhite">#fff</color>
+    <color name="colorMeetingTitleBar">#212121</color>
+    <color name="transparent_background">#ff000000</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>
