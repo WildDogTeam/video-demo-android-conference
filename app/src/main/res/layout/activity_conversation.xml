@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wilddog.video_tutorial_android.ConversationActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorMeetingTitleBar"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="你的Wilddog ID"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_uid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="111"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_flip_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="摄像头"
+            />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/surface"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_in_conversation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_operation_mic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="麦克风"/>
+
+            <Button
+                android:id="@+id/btn_operation_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="视频"/>
+
+            <Button
+                android:id="@+id/btn_operation_speaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扬声器"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_operation_invite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邀请"/>
+
+            <Button
+                android:id="@+id/btn_operation_hangup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="挂断"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_invite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTextGray"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_wait_for_accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="等待对方接受..."
+            />
+
+        <Button
+            android:id="@+id/btn_invite_and_cancel"
+            style="@style/ButtonBlueLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="发起会话"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

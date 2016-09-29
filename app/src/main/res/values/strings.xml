@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">video-demo-manyToMany</string>
+    <string name="prompt_email">电子邮箱</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登 录</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">Email地址不正确</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              tools:context="com.wilddog.video_tutorial_android.MainActivity">
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="请在控制面板-身份认证-登录方式中\n开启匿名登录功能"
+        android:textColor="@color/colorTextRed"
+        android:visibility="invisible"/>
+
+    <View
+        style="@style/view_hori"
+        />
+
+    <EditText
+        android:id="@+id/et_app_id"
+        style="@style/EditTextInput"
+        android:hint="请输入应用 ID"
+        android:imeActionId="@+id/login"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="text"
+        android:text="rtcdemo"
+
+        />
+
+    <View
+        style="@style/view_hori"
+        />
+
+    <Button
+
+        android:id="@+id/btn_login_anonymously"
+        style="@style/ButtonBlueLarge"
+        android:layout_gravity="center|center_vertical"
+        android:layout_marginTop="20dp"
+        android:text="匿名登录"
+        />
+
+
+</LinearLayout>
