@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.wilddog.video_tutorial_android.ConversationActivity">
+    tools:context="com.wilddog.video.demo.ConversationActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="摄像头"
+            android:layout_margin="3dp"
             />
 
     </FrameLayout>
@@ -56,59 +57,56 @@
         <android.opengl.GLSurfaceView
             android:id="@+id/surface"
             android:layout_width="match_parent"
-            android:layout_height="400dp"/>
+            android:layout_height="450dp"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_in_conversation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+android:gravity="center_vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_operation_mic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="麦克风"/>
-
-            <Button
-                android:id="@+id/btn_operation_video"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="视频"/>
-
-            <Button
-                android:id="@+id/btn_operation_speaker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="扬声器"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
+                android:layout_margin="3dp"
                 android:id="@+id/btn_operation_invite"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="邀请"/>
 
             <Button
+                android:layout_margin="3dp"
                 android:id="@+id/btn_operation_hangup"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="挂断"/>
+
+            <Button
+                android:layout_margin="3dp"
+                android:id="@+id/btn_operation_mic"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="麦克风"/>
+
+            <Button
+                android:layout_margin="3dp"
+                android:id="@+id/btn_operation_video"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="视频"/>
 
         </LinearLayout>
 
@@ -121,6 +119,7 @@
         android:background="@color/colorTextGray"
         android:gravity="center"
         android:orientation="vertical"
+        android:visibility="visible"
         >
 
         <TextView
@@ -139,6 +138,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:text="发起会话"
+            android:layout_margin="3dp"
             />
 
     </LinearLayout>

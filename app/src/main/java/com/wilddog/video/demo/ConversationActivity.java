@@ -66,8 +66,7 @@ public class ConversationActivity extends AppCompatActivity {
     Button btnMic;
     @BindView(R.id.btn_operation_video)
     Button btnVideo;
-    @BindView(R.id.btn_operation_speaker)
-    Button btnSpeaker;
+
     @BindView(R.id.btn_operation_invite)
     Button btnInvite;
     @BindView(R.id.btn_operation_hangup)
@@ -201,6 +200,10 @@ public class ConversationActivity extends AppCompatActivity {
         //通过video获取client实例
         client = video.getClient();
         //创建本地视频流，通过video对象获取本地视频流
+        LocalStreamOptions.VideoOptions videoOptions=new LocalStreamOptions.VideoOptions(true);
+        videoOptions.setHeight(240);
+        videoOptions.setWidth(320);
+        LocalStreamOptions options=new LocalStreamOptions(videoOptions,true);
         localStream = video.createLocalStream(LocalStreamOptions.DEFAULT_OPTIONS, new CompleteListener() {
             @Override
             public void onSuccess() {
