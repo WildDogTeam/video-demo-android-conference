@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,8 @@ public class ConversationActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_INVITE_TO_CONVERSATION = 0;
     public static final int REQUEST_CODE_INVITE = 1;
     //public static final int REQUEST_CODE_INVITE=0;
+
+    public static final String TAG = "Conversation";
     @BindView(R.id.tv_uid)
     TextView tvUid;
     @BindView(R.id.tv_wait_for_accept)
@@ -84,22 +87,23 @@ public class ConversationActivity extends AppCompatActivity {
     private ConversationClient client;
     private Conversation mConversation;
     private OutgoingInvite outgoingInvite;
-    private Map<IncomingInvite, AlertDialog> incomingDialogMap;
+    private Map<IncomingInvite, AlertDialog> incomingDialogMap = new HashMap<>();
+    ;
     private LocalStream localStream;
 
 
     private boolean isInviting = false;
     private Intent intent;
     private Map<String, VideoRenderer.Callbacks> callbacksMap = new ArrayMap<>();
+    //会话监听，监听被邀请者加入状态
     private Conversation.Listener conversationListener = new Conversation.Listener() {
         @Override
         public void onParticipantConnected(Conversation conversation, Participant participant) {
+            //当被邀请者成功加入会话后，会触发此方法
             RemoteStream remoteStream = participant.getRemoteStream();
-
+            //inviteToConversation 成功
             if (participantSet.size() == 0) {
-                /*VideoRendererGui.update(remoteCbFirst, 75, 75, 25, 25, RendererCommon.ScalingType.SCALE_ASPECT_FILL,
-                        false);*/
-                remoteCbFirst=VideoRendererGui.create(75, 75, 25, 25, RendererCommon.ScalingType.SCALE_ASPECT_FILL,
+                remoteCbFirst = VideoRendererGui.create(75, 75, 25, 25, RendererCommon.ScalingType.SCALE_ASPECT_FILL,
                         false);
                 remoteStream.attach(remoteCbFirst);
                 participantSet.add(participant.getParticipantId());
@@ -115,8 +119,8 @@ public class ConversationActivity extends AppCompatActivity {
                 int size = participantSet.size();
                 switch (size) {
                     case 2:
-                        remoteCbSecond = VideoRendererGui.createGuiRenderer(50, 75, 25, 25, RendererCommon.ScalingType
-                                .SCALE_ASPECT_FILL, false);
+                        remoteCbSecond = VideoRendererGui.createGuiRenderer(50, 75, 25, 25, RendererCommon
+                                .ScalingType.SCALE_ASPECT_FILL, false);
                         remoteStream.attach(remoteCbSecond);
                         callbacksMap.put(participant.getParticipantId(), remoteCbSecond);
 
@@ -135,25 +139,26 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public void onFailedToConnectParticipant(Conversation conversation, Participant participant,
                                                  ConversationException exception) {
-
+            //处理连接失败逻辑
         }
 
         @Override
         public void onParticipantDisconnected(Conversation conversation, Participant participant) {
-
+            //被邀请者离开会话
             VideoRenderer.Callbacks callbacks = callbacksMap.get(participant.getParticipantId());
             VideoRendererGui.remove(callbacks);
-
             participantSet.remove(participant.getParticipantId());
             callbacksMap.remove(callbacks);
-
-
         }
 
         @Override
         public void onConversationEnded(Conversation conversation, ConversationException exception) {
-            isInviting=false;
-            mConversation=null;
+            //当所有其他参与者离开会话时，判定会话已经结束，
+            isInviting = false;
+            if (mConversation != null) {
+                mConversation.disconnect();
+                mConversation = null;
+            }
             participantSet.clear();
             incomingDialogMap.clear();
             callbacksMap.clear();
@@ -166,14 +171,14 @@ public class ConversationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-
+        //初始化控件
         ButterKnife.bind(this);
         //初始化视频展示控件
         initVideoRender();
-
+        //获取当前用户的 Wilddog ID
         String uid = WilddogAuth.getInstance().getCurrentUser().getUid();
         tvUid.setText(uid);
-
+        //初始化Video
         Video.initializeWilddogVideo(getApplicationContext());
         //初始化视频根节点，mRef=WilddogSync.getReference().child([视频控制面板中配置的自定义根节点]);
         SyncReference mRef = WilddogSync.getReference().child("wilddog");
@@ -195,8 +200,7 @@ public class ConversationActivity extends AppCompatActivity {
         video = Video.getInstance();
         //通过video获取client实例
         client = video.getClient();
-
-
+        //创建本地视频流，通过video对象获取本地视频流
         localStream = video.createLocalStream(LocalStreamOptions.DEFAULT_OPTIONS, new CompleteListener() {
             @Override
             public void onSuccess() {
@@ -208,10 +212,9 @@ public class ConversationActivity extends AppCompatActivity {
 
             }
         });
-
+        //将视频对象绑定到VideoRenderer.Callbacks中
         localStream.attach(localCallbacks);
-
-        incomingDialogMap = new HashMap<>();
+        //为client对象设置InviteListener ，监听邀请事件变化，在使用inviteToConversation 前必须先设置监听
         this.client.setInviteListener(new ConversationClient.Listener() {
             @Override
             public void onStartListeningForInvites(ConversationClient client) {
@@ -230,13 +233,14 @@ public class ConversationActivity extends AppCompatActivity {
 
             @Override
             public void onIncomingInvite(ConversationClient client, final IncomingInvite invite) {
-
+                //有人邀请自己加入会话，invite对象可以接受或者拒绝邀请
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConversationActivity.this);
                 builder.setMessage("邀请你加入会话");
                 builder.setTitle("加入邀请");
                 builder.setNegativeButton("拒绝邀请", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //拒绝邀请
                         invite.reject();
                     }
                 });
@@ -245,27 +249,26 @@ public class ConversationActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         incomingDialogMap.remove(invite);
-
                         LocalStream stream = new LocalStream();
                         stream.setMediaStream(localStream.getMediaStream());
+                        //接受邀请，将本地视频流传给accept方法
                         invite.accept(stream, new ConversationCallback() {
                             @Override
                             public void onConversation(Conversation conversation, ConversationException exception) {
-
-                                mConversation = conversation;
-                                conversation.setConversationListener(conversationListener);
+                                //在onConversation方法中获取会话对象，
+                                if (conversation != null) {
+                                    mConversation = conversation;
+                                    conversation.setConversationListener(conversationListener);
+                                } else {
+                                    //处理错误信息
+                                    Log.e(TAG, exception.getErrorMsg());
+                                }
                             }
                         });
 
                     }
                 });
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
 
-                    }
-                });
-                //builder.setCancelable(false);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setCanceledOnTouchOutside(false);
                 alertDialog.show();
@@ -291,12 +294,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         localCallbacks = VideoRendererGui.createGuiRenderer(0, 0, 100, 100, RendererCommon.ScalingType
                 .SCALE_ASPECT_FILL, true);
-        /*remoteCbFirst = VideoRendererGui.createGuiRenderer(75, 75, 25, 25, RendererCommon.ScalingType
-                .SCALE_ASPECT_FILL, false);
-        remoteCbSecond = VideoRendererGui.createGuiRenderer(50, 75, 25, 25, RendererCommon.ScalingType
-                .SCALE_ASPECT_FILL, false);
-        remoteCbThird = VideoRendererGui.createGuiRenderer(25, 75, 25, 25, RendererCommon.ScalingType
-                .SCALE_ASPECT_FILL, false);*/
+
     }
 
 
@@ -320,8 +318,8 @@ public class ConversationActivity extends AppCompatActivity {
                 case REQUEST_CODE_INVITE_TO_CONVERSATION:
                     isInviting = true;
                     tvWaitForAccept.setVisibility(View.VISIBLE);
-                    btnInviteAndCancle.setText("取消");
-                    inviteParticipant(participants);
+                    btnInviteAndCancle.setText("取消会话");
+                    inviteToConversation(participants);
 
                     break;
             }
@@ -330,17 +328,26 @@ public class ConversationActivity extends AppCompatActivity {
 
     Set<String> participantSet = new HashSet<String>();
 
-    private void inviteParticipant(Set<String> participants) {
+    private void inviteToConversation(Set<String> participants) {
 
         LocalStream stream = new LocalStream();
         stream.setMediaStream(localStream.getMediaStream());
+        //创建InviteOption 对象，此对象包含邀请所需要的参数
         InviteOptions options = new InviteOptions(ConversationMode.SERVER_BASED, participants, stream);
+        //inviteToConversation 方法会返回一个OutgoingInvite对象，通过OutgoingInvite对象可以进行取消邀请操作
         outgoingInvite = client.inviteToConversation(options, new ConversationCallback() {
             @Override
             public void onConversation(Conversation conversation, ConversationException exception) {
-
-                mConversation = conversation;
-                mConversation.setConversationListener(conversationListener);
+                //对方接受邀请并成功建立会话，conversation不为空，exception为空
+                if (conversation != null) {
+                    mConversation = conversation;
+                    mConversation.setConversationListener(conversationListener);
+                } else {
+                    //todo 对方拒绝时，exception不为空
+                    tvWaitForAccept.setVisibility(View.INVISIBLE);
+                    btnInviteAndCancle.setText("发起会话");
+                    isInviting = false;
+                }
             }
         });
     }
@@ -348,10 +355,7 @@ public class ConversationActivity extends AppCompatActivity {
     @OnClick(R.id.btn_invite_and_cancel)
     public void invite() {
         if (!isInviting) {
-
             showLoginUsers();
-
-
         } else {
             outgoingInvite.cancel();
             tvWaitForAccept.setVisibility(View.INVISIBLE);
@@ -362,6 +366,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_flip_camera)
     public void flipCamera() {
+        //切换摄像头
         video.flipCamera();
     }
 
@@ -369,6 +374,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_operation_mic)
     public void micClick() {
+        //关闭/启用本地流音频，此操作影响所有人收到的音频流
         isAudioEnable = !isAudioEnable;
         localStream.enableAudio(isAudioEnable);
     }
@@ -377,19 +383,15 @@ public class ConversationActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_operation_video)
     public void videoClick() {
+        //关闭/启用本地流视频，此操作影响所有人收到的视频流
         isVideoEnable = !isVideoEnable;
         localStream.enableVideo(isVideoEnable);
     }
 
-    //开启/关闭扬声器
-    @OnClick(R.id.btn_operation_speaker)
-    public void speakerClick() {
 
-    }
-
-    //在会议中邀请其他人加入会话
     @OnClick(R.id.btn_operation_invite)
     public void inviteClick() {
+        //在会议中邀请其他人加入会话
         intent.putExtra("list_state", UserListState.STATE_SELF_EXCLUDE);
         startActivityForResult(intent, REQUEST_CODE_INVITE);
     }
@@ -397,7 +399,7 @@ public class ConversationActivity extends AppCompatActivity {
     //挂断会议
     @OnClick(R.id.btn_operation_hangup)
     public void hangupClick() {
-        //localStream.enableAudio(false);
+        //结束会话
 
         Set<Map.Entry<String, VideoRenderer.Callbacks>> entries = callbacksMap.entrySet();
         Iterator<Map.Entry<String, VideoRenderer.Callbacks>> iterator = entries.iterator();
@@ -407,6 +409,7 @@ public class ConversationActivity extends AppCompatActivity {
         callbacksMap.clear();
         participantSet.clear();
         mConversation.disconnect();
+        mConversation = null;
         llInConversation.setVisibility(View.GONE);
         llInvite.setVisibility(View.VISIBLE);
     }
