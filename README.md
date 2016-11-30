@@ -1,6 +1,12 @@
 # video-demo-android-manyToMany
 使用野狗video sdk建立多人视频通话的示例
 
+##CHANGELOG Version 0.5.0
+
+## 修改
+1.使用video api 0.5.0 实现视频通话
+2.使用 conference 替代 SERVER_BASED模式
+
 ##CHANGELOG Version 0.1.0
 ## 新增：
 
