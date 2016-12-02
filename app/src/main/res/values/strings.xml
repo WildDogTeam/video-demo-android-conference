@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">video-demo-manyToMany</string>
+    <string name="app_name">多人视频会议</string>
     <string name="prompt_email">电子邮箱</string>
     <string name="prompt_password">密码</string>
     <string name="action_sign_in">登 录</string>

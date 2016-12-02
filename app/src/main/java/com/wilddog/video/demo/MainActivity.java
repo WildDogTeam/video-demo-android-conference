@@ -16,6 +16,7 @@ import com.wilddog.wilddogauth.WilddogAuth;
 import com.wilddog.wilddogauth.core.Task;
 import com.wilddog.wilddogauth.core.listener.OnCompleteListener;
 import com.wilddog.wilddogauth.core.result.AuthResult;
+import com.wilddog.wilddogauth.core.result.GetTokenResult;
 import com.wilddog.wilddogcore.WilddogApp;
 import com.wilddog.wilddogcore.WilddogOptions;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("Login", "authWithPassword uid ::" + uid);
                     if (!TextUtils.isEmpty(uid)) {
                         writeToUsers(uid);
-                        Intent intent = new Intent(getApplicationContext(), ConversationActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), InputIdActivity.class);
                         startActivity(intent);
                     }
                 } else {

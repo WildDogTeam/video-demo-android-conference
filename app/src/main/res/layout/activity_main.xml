@@ -5,19 +5,39 @@
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
               android:orientation="vertical"
+              android:background="@color/colorWhite"
               tools:context="com.wilddog.video.demo.MainActivity">
-
-    <TextView
-        android:id="@+id/tv_prompt"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="请在控制面板-身份认证-登录方式中\n开启匿名登录功能"
-        android:textColor="@color/colorTextRed"
-        android:visibility="invisible"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorMeetingTitleBar"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Video 多人视频会议"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                />
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+
 
     <View
+        android:layout_marginTop="100dp"
         style="@style/view_hori"
         />
 
@@ -29,13 +49,23 @@
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionUnspecified"
         android:inputType="text"
-        android:text=""
+        android:text="rtcdemo"
 
         />
 
     <View
         style="@style/view_hori"
         />
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="请确保你已在控制面板中开启匿名登录功能"
+        android:textColor="@color/colorTextBlack"
+        android:visibility="visible"/>
 
     <Button
 
