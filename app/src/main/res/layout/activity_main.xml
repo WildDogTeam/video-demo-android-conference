@@ -49,7 +49,7 @@
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionUnspecified"
         android:inputType="text"
-        android:text="rtcdemo"
+        android:text=""
 
         />
 
