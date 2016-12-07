@@ -1,8 +1,6 @@
 package com.wilddog.video.demo;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wilddog.client.SyncReference;
@@ -29,7 +26,6 @@ import com.wilddog.video.bean.VideoException;
 import com.wilddog.video.listener.CompleteListener;
 
 import org.webrtc.EglBase;
-import org.webrtc.RendererCommon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -85,8 +81,6 @@ public class ConferenceActivity extends AppCompatActivity {
     @BindView(R.id.remote_video_view3)
     WilddogVideoView remote_video_view3;
 
-
-
     private WilddogVideo video;
     private WilddogVideoClient client;
 
@@ -132,7 +126,7 @@ public class ConferenceActivity extends AppCompatActivity {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
         LocalStreamOptions options = builder.height(240).width(320).build();
         //创建本地媒体流，通过video对象获取本地视频流
-        localStream = video.createLocalStream(options, eglBaseContext, new CompleteListener() {
+        localStream = video.createLocalStream(options, new CompleteListener() {
             @Override
             public void onCompleted(VideoException s) {
 
@@ -146,17 +140,12 @@ public class ConferenceActivity extends AppCompatActivity {
 
     }
 
-    private EglBase.Context eglBaseContext = EglBase.create().getEglBaseContext();
-
     private void initVideoRender() {
         //初始化本地媒体流展示控件
-        local_video_view.init(eglBaseContext, null);
         localRenderLayout.setPosition(LAYOUT_SPLIT_H, LAYOUT_SPLIT_V, LAYOUT_W, LAYOUT_H);
         local_video_view.setZOrderMediaOverlay(true);
-        local_video_view.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
         //本地媒体流设置镜像
         local_video_view.setMirror(true);
-        local_video_view.requestLayout();
 
         //初始化远端媒体流展示控件
         videoViews = new ArrayList<>();
@@ -172,13 +161,6 @@ public class ConferenceActivity extends AppCompatActivity {
         videoViewManager = VideoViewManager.getVideoViewManager();
         videoViewManager.setView(videoViews);
 
-
-        for (WilddogVideoView videoView : videoViews) {
-            videoView.init(eglBaseContext, null);
-            videoView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
-            videoView.setMirror(false);
-            videoView.requestLayout();
-        }
         //计算并初始化Layout位置、大小
         for (int i = 0; i < renderLayouts.size(); i++) {
 
