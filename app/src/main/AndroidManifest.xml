@@ -41,6 +41,9 @@
             android:theme="@style/NotitleTheme"
             >
         </activity>
+        <activity
+            android:name=".PermissionActivity"
+            android:theme="@style/NotitleTheme"/>
     </application>
 
 </manifest>

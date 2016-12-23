@@ -31,6 +31,17 @@ android {
         exclude 'META-INF/maven/com.squareup.okhttp/okhttp/pom.xml'
         exclude 'META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.properties'
         exclude 'META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.xml'
+        exclude 'META-INF/NOTICE' // will not include NOTICE file
+        exclude 'META-INF/LICENSE' // will not include LICENSE file
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        // as noted by @Vishnuvathsan you may also need to include
+        // variations on the file name. It depends on your dependencies.
+        // Some other common variations on notice and license file names
+        exclude 'META-INF/notice'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license'
+        exclude 'META-INF/license.txt'
     }
     lintOptions {
         abortOnError false
@@ -42,9 +53,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.wilddog.client:wilddog-auth-android:2.0.3'
-    compile 'com.wilddog.client:wilddog-sync-android:2.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.wilddog.client:wilddog-video-android:0.5.2'
+    compile 'com.wilddog.client:wilddog-video-android:0.5.4'
 }

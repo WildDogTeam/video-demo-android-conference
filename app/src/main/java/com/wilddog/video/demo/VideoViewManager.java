@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,6 +64,16 @@ public class VideoViewManager {
     }
 
     public void dispose() {
+        Set<Map.Entry<Integer, WilddogVideoView>> entries = views.entrySet();
+        Iterator<Map.Entry<Integer, WilddogVideoView>> iterator = entries.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, WilddogVideoView> videoViewEntry = iterator.next();
+            WilddogVideoView value = videoViewEntry.getValue();
+            if (value != null) {
+                value.release();
+                value = null;
+            }
+        }
         this.views.clear();
     }
 }

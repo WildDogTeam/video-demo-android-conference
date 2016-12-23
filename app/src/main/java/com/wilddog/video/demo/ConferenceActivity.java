@@ -25,8 +25,6 @@ import com.wilddog.video.bean.LocalStreamOptions;
 import com.wilddog.video.bean.VideoException;
 import com.wilddog.video.listener.CompleteListener;
 
-import org.webrtc.EglBase;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -215,14 +213,18 @@ public class ConferenceActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onStreamRemoved(RemoteStream remoteStream) {
-
+                    public void onConnectFailed(Participant participant, VideoException e) {
+                        Log.e(TAG,"onConnectFailed");
+                        // TODO: 16-12-16 handle onConnectFailed events
                     }
 
                     @Override
-                    public void onError(VideoException exception) {
-
+                    public void onDisconnected(Participant participant, VideoException e) {
+                        Log.e(TAG,"onDisconnected");
+                        // TODO: 16-12-16 handle onDisconnected events
                     }
+
+
                 });
             }
 
@@ -273,11 +275,17 @@ public class ConferenceActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //释放持有的资源
+        localStream.detach();
+        localStream.close();
+
+        if (local_video_view != null) {
+            local_video_view.release();
+            local_video_view = null;
+        }
         if (mConference != null) {
             mConference.disconnect();
         }
-        localStream.detach();
-        localStream.close();
+        client.dispose();
         video.dispose();
         videoViewManager.dispose();
     }
