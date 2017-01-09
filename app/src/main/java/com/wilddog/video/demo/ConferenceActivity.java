@@ -107,7 +107,7 @@ public class ConferenceActivity extends AppCompatActivity {
         conferenceId = getIntent().getStringExtra("conferenceId");
         tvConferenceId.setText(conferenceId);
 
-        SyncReference reference = WilddogSync.getReference();
+        SyncReference reference = WilddogSync.getInstance().getReference();
         String path = reference.getRoot().toString();
         int startIndex = path.indexOf("https://") == 0 ? 8 : 7;
         String appid = path.substring(startIndex, path.length() - 14);
