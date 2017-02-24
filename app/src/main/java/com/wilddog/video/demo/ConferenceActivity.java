@@ -142,8 +142,9 @@ public class ConferenceActivity extends AppCompatActivity {
         //初始化本地媒体流展示控件
         localRenderLayout.setPosition(LAYOUT_SPLIT_H, LAYOUT_SPLIT_V, LAYOUT_W, LAYOUT_H);
         local_video_view.setZOrderMediaOverlay(true);
-        //本地媒体流设置镜像
         local_video_view.setMirror(true);
+        //本地媒体流设置镜像
+
 
         //初始化远端媒体流展示控件
         videoViews = new ArrayList<>();
