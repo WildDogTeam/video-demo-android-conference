@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
@@ -23,6 +24,7 @@ import com.wilddog.video.WilddogVideoViewLayout;
 import com.wilddog.video.bean.ConnectOptions;
 import com.wilddog.video.bean.LocalStreamOptions;
 import com.wilddog.video.bean.VideoException;
+import com.wilddog.video.bean.VideoExceptionCode;
 import com.wilddog.video.listener.CompleteListener;
 
 import java.util.ArrayList;
@@ -190,6 +192,9 @@ public class ConferenceActivity extends AppCompatActivity {
             @Override
             public void onConnectFailed(Conference conference, VideoException exception) {
                 Log.e(TAG, "onConnectFailed:" + exception);
+                if(exception.getErrorCode()== VideoExceptionCode.VIDEO_CLIENT_REGISTRATION_FAILED && exception.getMessage().equals("VIDEO_CLIENT_REGISTRATION_FAILED:App is stopped for resource limit")){
+                    Toast.makeText(ConferenceActivity.this,"video功能未开启或者已停止服务",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
