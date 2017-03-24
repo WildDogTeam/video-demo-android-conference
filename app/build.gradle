@@ -55,5 +55,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.wilddog.client:wilddog-video-android:0.5.10'
+    compile 'com.wilddog.client:wilddog-video-android:0.5.12'
 }
