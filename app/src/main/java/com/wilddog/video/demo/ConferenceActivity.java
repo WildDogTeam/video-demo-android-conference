@@ -124,7 +124,7 @@ public class ConferenceActivity extends AppCompatActivity {
         client = video.getClient();
         //配置本地媒体流参数
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
-        LocalStreamOptions options = builder.height(240).width(320).build();
+        LocalStreamOptions options = builder.height(720).width(1280).build();
         //创建本地媒体流，通过video对象获取本地视频流
         localStream = video.createLocalStream(options, new CompleteListener() {
             @Override
