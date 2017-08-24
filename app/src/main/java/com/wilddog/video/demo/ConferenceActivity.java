@@ -133,7 +133,7 @@ public class ConferenceActivity extends AppCompatActivity {
             }
         });
         localStream.enableAudio(isAudioEnable);
-        localStream.enableVideo(false);
+        localStream.enableVideo(true);
         //将本地媒体流绑定到WilddogVideoView中
         localStream.attach(local_video_view);
         //加入会议 ID 为conferenceId的会议
@@ -216,7 +216,7 @@ public class ConferenceActivity extends AppCompatActivity {
 
                         if (view != null) {
                             remoteStream.attach(view);
-                            remoteStream.enableVideo(false);
+                            remoteStream.enableVideo(true);
                         }
                     }
 
