@@ -53,7 +53,7 @@ public class ConferenceActivity extends AppCompatActivity {
     Set<String> participantSet = new HashSet<String>();
     private Conference mConference;
     private Map<String, WilddogVideoView> mPartiViewMap = new ArrayMap<>();
-    boolean isAudioEnable = false;
+    boolean isAudioEnable = true;
     @BindView(R.id.tv_cid)
     TextView tvConferenceId;
     @BindView(R.id.btn_operation_mic)
