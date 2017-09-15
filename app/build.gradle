@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.wilddog.video.demo"
+        applicationId "com.wilddog.wilddogroom"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
@@ -54,6 +54,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.wilddog.client:wilddog-video-android:0.5.15'
+    compile ('com.wilddog.client:wilddog-room-android:2.0.0-beta'){exclude group:"com.squareup.okhttp3",module:"okhttp"}
+    compile 'com.wilddog.client:wilddog-auth-android:2.0.6'
     compile 'com.android.support:appcompat-v7:25.2.0'
 }
+

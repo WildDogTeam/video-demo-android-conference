@@ -1,80 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:background="@color/colorWhite"
-              tools:context="com.wilddog.video.demo.MainActivity">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorMeetingTitleBar"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Video 多人视频会议"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                />
-
-
-        </LinearLayout>
-
-
-    </FrameLayout>
-
-
-
-
-    <View
-        android:layout_marginTop="100dp"
-        style="@style/view_hori"
-        />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="@color/colorWhite"
+    tools:context="com.wilddog.wilddogroom.activity.LoginActivity">
 
     <EditText
-        android:id="@+id/et_app_id"
-        style="@style/EditTextInput"
-        android:hint="请输入应用 ID"
-        android:imeActionId="@+id/login"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionUnspecified"
-        android:inputType="text"
-        android:text=""
-
-        />
-
-    <View
-        style="@style/view_hori"
-        />
-
-    <TextView
-        android:id="@+id/tv_prompt"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_roomId"
+        android:hint="输入房间号"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:text="请确保你已在控制面板中开启匿名登录功能"
-        android:textColor="@color/colorTextBlack"
-        android:visibility="visible"/>
-
-    <Button
-
-        android:id="@+id/btn_login_anonymously"
-        style="@style/ButtonBlueLarge"
-        android:layout_gravity="center|center_vertical"
-        android:layout_marginTop="20dp"
-        android:text="匿名登录"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
         />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="加入"
+    android:background="@android:color/holo_blue_light"
+    android:id="@+id/btn_login_anonymous"
+    />
 
 
 </LinearLayout>
