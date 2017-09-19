@@ -58,7 +58,7 @@ Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `
 连接安卓手机（4.4 以上版本），运行快速入门。
 
 ### 版本声明
-本应用使用的是WilddogVideo 2.0+ SDK。
+本应用使用的是WilddogRoom 2.0+ SDK。
 
 ### 联系方式
 如果发现有bug,请及时和我们取得联系。
