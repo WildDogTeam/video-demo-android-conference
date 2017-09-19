@@ -1,5 +1,6 @@
 package com.wilddog.wilddogroom.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,12 +22,29 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginWithAnonymous;
     private boolean islogining = false;
     private EditText roomId;
+    private static final int REQUEST_CODE = 0; // 请求码
+
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        //动态申请权限
+        int sdk=android.os.Build.VERSION.SDK_INT;
+        if (sdk>=23){
+            Intent intent=new Intent(this,PermissionActivity.class);
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Bundle bundle=new Bundle();
+            bundle.putStringArray("permission",PERMISSIONS);
+            PermissionActivity.startActivityForResult(this,REQUEST_CODE,PERMISSIONS);
+        }
     }
 
     private void initView() {
