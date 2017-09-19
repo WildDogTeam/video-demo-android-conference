@@ -10,18 +10,52 @@ git clone git@github.com:WildDogTeam/video-demo-android-conversation.git
 cd  video-demo-android-conversation
 ```
 
-### 创建Wilddog 应用
+我们通过一个简单的视频会议示例来说明 WilddogRoom SDK 的用法。[前往demo源码](https://github.com/WildDogTeam/video-demo-android-conference
+<div class="env">
+    <p class="env-title">环境准备</p>
+    <ul>
+        <li> Android Studio 1.5 以上版本 </li>
+        <li> JDK 7.0 及以上版本 </li>
+        <li> Android 手机系统 4.4 以上版本， 即 Android SDK 19 以上版本 </li>
+    </ul>
+</div>
 
-WilddogRoom Demo 需要 创建一个Wilddog应用。并且开通视频通话,您可以在这里[注册](https://www.wilddog.com/my-account/signup)一个免费帐户。
+## 1. 创建应用
 
-## 打开登录方式
-打开身份认证,将匿名登录打开。
+首先，在控制面板中创建应用。
 
-### 安装和测试
-修改 com.wilddog.wilddogroom.Constants 类中的 WILDDOG_VIDEO_ID 值为在 Wilddog 官网申请的 Wliddog Video AppID。
+<img src="/images/video_quickstart_create.png" alt="video_quickstart_create">
 
-安装打开应用。
+## 2. 开启匿名登录
 
+应用创建成功后，进入 管理应用-身份认证-登录方式，开启匿名登录。
+
+<img src="/images/openanonymous.png" alt="video_quickstart_openanonymous">
+
+## 3. 开启实时视频通话
+
+进入 管理应用-实时视频通话，开启视频通话功能。此处注意记下配置页面的`VideoAppID`
+
+<img src="/images/video_quickstart_openVideo.png" alt="video_quickstart_openVideo">
+
+## 4. 导入快速入门
+
+Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `Android Studio File --> New --> Import Project` 导入快速入门。
+
+<blockquote class="notice">
+  <p><strong>提示：</strong></p>
+  使用 Android Studio 导入安卓项目时，可能会在 Gradle build 时卡顿在 Building gradle project info 界面上，原因及解决方案请<a href='https://github.com/WildDogTeam/wilddog-doc2/blob/master/Android%20Studio%20Gradle%20%E9%85%8D%E7%BD%AE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.md'> 参考该文档 </a>。
+</blockquote>
+
+## 5. 配置应用APPID
+
+快速入门Constants中的WILDDOG_VIDEO_ID如下图所示
+
+<img src="/images/video_quickstart_videoappid.png" alt="video_quickstart_videoappid">
+
+## 6. 运行快速入门
+
+连接安卓手机（4.4 以上版本），运行快速入门。
 
 ### 版本声明
 本应用使用的是WilddogVideo 2.0+ SDK。
