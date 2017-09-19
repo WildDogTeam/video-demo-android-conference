@@ -6,8 +6,8 @@
 首先确认本机已经安装 [Android](http://developer.android.com/index.html)运行环境,git和 Andriod Studio 开发环境 ，然后执行下列指令：
 
 ```
-git clone git@github.com:WildDogTeam/video-demo-android-conversation.git
-cd  video-demo-android-conversation
+git clone git@github.com:WildDogTeam/video-demo-android-conference.git
+cd  video-demo-android-conference
 ```
 
 我们通过一个简单的视频会议示例来说明 WilddogRoom SDK 的用法。[前往demo源码](https://github.com/WildDogTeam/video-demo-android-conference)
