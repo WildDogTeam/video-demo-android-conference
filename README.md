@@ -10,7 +10,7 @@ git clone git@github.com:WildDogTeam/video-demo-android-conversation.git
 cd  video-demo-android-conversation
 ```
 
-我们通过一个简单的视频会议示例来说明 WilddogRoom SDK 的用法。[前往demo源码](https://github.com/WildDogTeam/video-demo-android-conference
+我们通过一个简单的视频会议示例来说明 WilddogRoom SDK 的用法。[前往demo源码](https://github.com/WildDogTeam/video-demo-android-conference)
 <div class="env">
     <p class="env-title">环境准备</p>
     <ul>
