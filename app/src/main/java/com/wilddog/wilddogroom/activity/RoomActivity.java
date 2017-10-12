@@ -1,22 +1,15 @@
 package com.wilddog.wilddogroom.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.wilddog.room.CompleteListener;
-import com.wilddog.room.RoomStream;
-import com.wilddog.room.WilddogRoom;
 import com.wilddog.video.base.LocalStream;
 import com.wilddog.video.base.LocalStreamOptions;
 import com.wilddog.video.base.WilddogVideoError;
@@ -24,13 +17,15 @@ import com.wilddog.video.base.WilddogVideoInitializer;
 import com.wilddog.video.base.WilddogVideoView;
 import com.wilddog.video.base.util.LogUtil;
 import com.wilddog.video.base.util.logging.Logger;
+import com.wilddog.video.room.CompleteListener;
+import com.wilddog.video.room.RoomStream;
+import com.wilddog.video.room.WilddogRoom;
 import com.wilddog.wilddogauth.WilddogAuth;
 import com.wilddog.wilddogroom.R;
 import com.wilddog.wilddogroom.bean.StreamHolder;
 import com.wilddog.wilddogroom.util.Constants;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -110,8 +105,15 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onDisconnected(WilddogRoom wilddogRoom) {
-                Toast.makeText(RoomActivity.this,"服务器连接断开", Toast.LENGTH_SHORT).show();
-                finish();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RoomActivity.this,"服务器连接断开", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        //
+              //  room.disconnect();
+//                finish();
             }
 
             @Override
@@ -217,7 +219,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_operation_video:
                 if(localStream!=null){
                     isVideoEnable = !isVideoEnable;
-                    localStream.enableAudio(isVideoEnable);
+                    localStream.enableVideo(isVideoEnable);
                 }
                 break;
             case R.id.btn_operation_hangup:
@@ -228,57 +230,14 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public class  MygridViewAdapter extends BaseAdapter {
-        private List<StreamHolder> mlist;
-        private Context mContext;
-        MygridViewAdapter(Context context, List<StreamHolder> list){
-        mContext = context;
-        mlist = list;
-        }
 
-        @Override
-        public int getCount() {
-            return mlist.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return i;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ViewHolder holder;
-            StreamHolder streamHolder = mlist.get(i);
-            if(view==null){
-                view = View.inflate(mContext, R.layout.listitem_video,null);
-                holder = new ViewHolder();
-                holder.wilddogVideoView = (WilddogVideoView) view.findViewById(R.id.wvv_video);
-                view.setTag(holder);
-            }else {
-                holder = (ViewHolder) view.getTag();
-            }
-            streamHolder.getStream().detach();
-            streamHolder.getStream().attach(holder.wilddogVideoView);
-            return view;
-        }
-
-
-        class ViewHolder{
-            WilddogVideoView wilddogVideoView;
-        }
-    }
 
     private void leaveRoom(){
         if(room!=null){
             room.disconnect();
             room=null;
         }
+        finish();
     }
 
     @Override

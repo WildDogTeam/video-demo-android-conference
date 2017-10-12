@@ -5,5 +5,5 @@ package com.wilddog.wilddogroom.util;
  */
 
 public class Constants {
-    public static final String WILDDOG_VIDEO_ID = <Your VIDEO APPID >;
+    public static final String WILDDOG_VIDEO_ID = <YOUR VIDEO APPID>;
 }
