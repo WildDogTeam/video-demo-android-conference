@@ -38,6 +38,12 @@ cd  video-demo-android-conference
 
 <img src="/images/video_quickstart_openVideo.png" alt="video_quickstart_openVideo">
 
+<blockquote class="notice">
+  <p><strong>提示：</strong></p>
+  如果之前没有使用过sync服务的需要手动开启
+</blockquote>
+<img src="/images/opensync.png" alt="video_quickstart_openSync">
+
 ## 4. 导入快速入门
 
 Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `Android Studio File --> New --> Import Project` 导入快速入门。
