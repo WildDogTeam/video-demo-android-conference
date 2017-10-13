@@ -63,7 +63,7 @@ Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `
 ### 联系方式
 如果发现有bug,请及时和我们取得联系。
 
-QQ 544277825
+工单地址 : https://wilddog.kf5.com/hc/request/new/
 
 客服电话： 400-616-0980
 
