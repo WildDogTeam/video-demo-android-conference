@@ -54,7 +54,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile ('com.wilddog.client:wilddog-video-room-android:2.1.1-beta'){exclude group:"com.squareup.okhttp3",module:"okhttp"}
+    compile ('com.wilddog.client:wilddog-video-room-android:2.1.2'){exclude group:"com.squareup.okhttp3",module:"okhttp"}
     compile 'com.wilddog.client:wilddog-auth-android:2.0.6'
     compile 'com.android.support:appcompat-v7:25.2.0'
 }

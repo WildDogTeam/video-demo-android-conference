@@ -69,18 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             islogining = false;
             return;
         }
-
-        if (strRoonId.length() > 20 || strRoonId.length() < 1) {
-            Toast.makeText(LoginActivity.this, "输入的房间号长度应在1-20之间", Toast.LENGTH_SHORT).show();
-            islogining = false;
-            return;
-        }
-
-        if (strRoonId.matches("[A-Za-z0-9_]+")) {
-            loginWithAnonymous(strRoonId);
-        } else {
-            Toast.makeText(LoginActivity.this, "房间号只能包含数组,字母,下划线", Toast.LENGTH_SHORT).show();
-        }
+        loginWithAnonymous(strRoonId);
     }
 
     private void loginWithAnonymous(final String strRoomId) {
