@@ -63,13 +63,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkRoomID() {
-        String strRoonId = roomId.getText().toString().trim();
-        if (TextUtils.isEmpty(strRoonId)) {
+        String strRoomId = roomId.getText().toString().trim();
+        if (TextUtils.isEmpty(strRoomId)) {
             Toast.makeText(LoginActivity.this, "输入的房间号不能为空", Toast.LENGTH_SHORT).show();
             islogining = false;
             return;
         }
-        loginWithAnonymous(strRoonId);
+        loginWithAnonymous(strRoomId);
     }
 
     private void loginWithAnonymous(final String strRoomId) {
