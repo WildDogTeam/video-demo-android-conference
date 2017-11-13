@@ -4,10 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    android:padding="10dp"
     tools:context="com.wilddog.wilddogroom.activity.LoginActivity">
 
-    <com.wilddog.video.WilddogVideoView
+    <com.wilddog.video.base.WilddogVideoView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

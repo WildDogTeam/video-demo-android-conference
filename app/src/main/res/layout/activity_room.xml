@@ -48,76 +48,15 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/fullscreen_content"
+    <GridView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="horizontal"
-          >
-          <com.wilddog.video.base.WilddogVideoView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:id="@+id/wvv_local"
-              />
-          <com.wilddog.video.base.WilddogVideoView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="5dp"
-              android:layout_weight="1"
-              android:id="@+id/wvv_remote1"
-              />
-      </LinearLayout>
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-          >
-          <com.wilddog.video.base.WilddogVideoView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:id="@+id/wvv_remote2"
-              />
-          <com.wilddog.video.base.WilddogVideoView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="5dp"
-              android:layout_weight="1"
-              android:id="@+id/wvv_remote3"
-              />
-      </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-            android:layout_marginTop="5dp"
-          >
-          <com.wilddog.video.base.WilddogVideoView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:id="@+id/wvv_remote4"
-              />
-          <com.wilddog.video.base.WilddogVideoView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="5dp"
-              android:layout_weight="1"
-              android:id="@+id/wvv_remote5"
-              />
-      </LinearLayout>
+        android:id="@+id/gv_streams"
+        android:numColumns="2"
+        ></GridView>
 
-    </LinearLayout>
+
 
 
     <LinearLayout

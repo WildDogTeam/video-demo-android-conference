@@ -10,10 +10,30 @@ import com.wilddog.video.base.core.Stream;
 public class StreamHolder {
     private Long timeStamp;
     private Stream stream;
+    private boolean isLocal =false;
 
-    public StreamHolder(long timeStamp, Stream stream) {
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public StreamHolder(boolean isLocal, long timeStamp, Stream stream) {
+        this.isLocal = isLocal;
         this.timeStamp = timeStamp;
         this.stream = stream;
+    }
+
+    public boolean isLocal() {
+        return isLocal;
+    }
+
+    public void setLocal(boolean local) {
+        isLocal = local;
     }
 
     public Long getTimeStamp() {
