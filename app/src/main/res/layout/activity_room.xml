@@ -60,6 +60,14 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_monitor"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#5fcecece"
+        android:gravity="center"
+        android:orientation="horizontal"
+        />
+    <LinearLayout
         android:id="@+id/ll_invite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
