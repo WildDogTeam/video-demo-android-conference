@@ -10,13 +10,13 @@ git clone git@github.com:WildDogTeam/video-demo-android-conference.git
 cd  video-demo-android-conference
 ```
 
-我们通过一个简单的视频会议示例来说明 WilddogRoom SDK 的用法。[前往demo源码](https://github.com/WildDogTeam/video-demo-android-conference)
+我们通过一个简单的视频会议示例来说明 WilddogRoom SDK 的用法。
 <div class="env">
     <p class="env-title">环境准备</p>
     <ul>
         <li> Android Studio 1.5 以上版本 </li>
         <li> JDK 7.0 及以上版本 </li>
-        <li> Android 手机系统 4.4 以上版本， 即 Android SDK 19 以上版本 </li>
+        <li> Android 手机系统 4.1 以上版本， 即 Android SDK 16 以上版本 </li>
     </ul>
 </div>
 
@@ -61,7 +61,7 @@ Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `
 
 ## 6. 运行快速入门
 
-连接安卓手机（4.4 以上版本），运行快速入门。
+连接安卓手机（4.1 以上版本），运行快速入门。
 
 ### 版本声明
 本应用使用的是WilddogRoom 2.0+ SDK。
