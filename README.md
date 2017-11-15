@@ -1,6 +1,6 @@
 # WilddogRoom Demo
 
-使用野狗 WilddogRoom SDK建立多人视频通话的示例
+使用野狗 WilddogRoom SDK 建立多人视频通话的示例
 
 ## 本地运行
 首先确认本机已经安装 [Android](http://developer.android.com/index.html) 运行环境 ， `git` 和 `Andriod Studio` 开发环境 ，然后执行下列指令：
@@ -79,7 +79,7 @@ Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `
 
 ## 更多示例
 
-这里分类汇总了 WildDog平台上的示例程序和开源应用，[链接地址](https://github.com/WildDogTeam/wilddog-demos)。
+这里分类汇总了 WildDog 平台上的示例程序和开源应用，[链接地址](https://github.com/WildDogTeam/wilddog-demos)。
 　　
 
 ## License
