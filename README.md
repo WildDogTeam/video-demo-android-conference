@@ -69,7 +69,7 @@ Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `
 
 ### 联系方式
 
-如果发现有 bug ,请及时和我们取得联系。
+如果发现有 bug，请及时和我们取得联系。
 
 工单地址 : https://wilddog.kf5.com/hc/request/new/
 
@@ -79,7 +79,7 @@ Android 快速入门是使用 Android Studio 创建的 Android 工程，使用 `
 
 ## 更多示例
 
-这里分类汇总了 WildDog平台上的示例程序和开源应用，　[链接地址](https://github.com/WildDogTeam/wilddog-demos)。
+这里分类汇总了 WildDog平台上的示例程序和开源应用，[链接地址](https://github.com/WildDogTeam/wilddog-demos)。
 　　
 
 ## License
