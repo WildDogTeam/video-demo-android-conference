@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +28,22 @@ import com.wilddog.video.room.CompleteListener;
 import com.wilddog.video.room.RoomStream;
 import com.wilddog.video.room.WilddogRoom;
 import com.wilddog.wilddogauth.WilddogAuth;
+import com.wilddog.wilddogroom.Intercepter.IMonitorRecord;
+import com.wilddog.wilddogroom.Intercepter.SamplerIntercepter;
+import com.wilddog.wilddogroom.Intercepter.SamplerThread;
 import com.wilddog.wilddogroom.R;
 import com.wilddog.wilddogroom.bean.StreamHolder;
 import com.wilddog.wilddogroom.util.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class RoomActivity extends AppCompatActivity implements View.OnClickListener {
-    private String roomId;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
+public class RoomActivity extends AppCompatActivity implements View.OnClickListener, IMonitorRecord {
+    private String roomId ;
+
 
     private TextView tvRoomId;
     private Button camera;
@@ -56,6 +64,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
 
     private MygridViewAdapter adapter;
     private List<StreamHolder> streamHolders = new ArrayList<>();
+    private HashMap<String, TextView> mMapView = new HashMap<>();
 
     private Handler handler = new Handler() {
         @Override
@@ -70,6 +79,8 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
+    private SamplerThread mSamplerThread;
+    private LinearLayout monitorView;
 
 
     @Override
@@ -81,9 +92,14 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         initRoomSDK();
         createLocalStream();
         joinRoom();
+        initMonitor();
     }
 
-
+    private void initMonitor() {
+        SamplerIntercepter samplerIntercepter = new SamplerIntercepter(this);
+        mSamplerThread = new SamplerThread(samplerIntercepter, 300f);
+        mSamplerThread.startSampling();
+    }
     private void joinRoom() {
         room = new WilddogRoom(roomId, new WilddogRoom.Listener() {
             @Override
@@ -207,6 +223,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         video.setOnClickListener(this);
         leave = (Button) findViewById(R.id.btn_operation_hangup);
         leave.setOnClickListener(this);
+        monitorView = (LinearLayout) findViewById(R.id.ll_monitor);
         gvStreams = (GridView) findViewById(R.id.gv_streams);
         gvStreams.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new MygridViewAdapter(this, streamHolders);
@@ -239,6 +256,22 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    public void addOneRecord(String tvName, String tvNum, boolean isGoodValue) {
+        String tvResult = tvName + ": " + tvNum;
+        TextView tv = mMapView.get(tvName);
+        if(tv==null){
+            tv = new TextView(RoomActivity.this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+            lp.setMargins(8, 8, 8, 8);
+            tv.setLayoutParams(lp);
+            tv.setTextSize(15);
+            monitorView.addView(tv);
+            mMapView.put(tvName, tv);
+        }
+        tv.setText(tvResult);
     }
 
     public class MygridViewAdapter extends BaseAdapter {
@@ -308,6 +341,9 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         leaveRoom();
         if (!localStream.isClosed()) {
             localStream.close();
+        }
+        if(mSamplerThread.isSampling()){
+            mSamplerThread.stopSampling();
         }
     }
 }
