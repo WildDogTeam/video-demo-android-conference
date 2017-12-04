@@ -85,7 +85,6 @@
             android:layout_margin="3dp"
             android:layout_marginTop="5dp"
             android:text="离开会议" />
-
         <Button
             android:id="@+id/btn_operation_video"
             android:layout_width="0dp"

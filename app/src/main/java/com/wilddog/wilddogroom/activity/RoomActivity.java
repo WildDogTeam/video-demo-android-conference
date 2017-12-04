@@ -34,8 +34,8 @@ import com.wilddog.wilddogroom.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomActivity extends AppCompatActivity implements View.OnClickListener{
-    private String roomId ;
+public class RoomActivity extends AppCompatActivity implements View.OnClickListener {
+    private String roomId;
 
     private TextView tvRoomId;
     private Button camera;
@@ -50,24 +50,24 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
     private WilddogVideoInitializer initializer;
     private WilddogRoom room;
 
-    private GridView gvStreams ;
+    private GridView gvStreams;
 
     private boolean isLocalAttach = false;
 
-    private MygridViewAdapter adapter ;
+    private MygridViewAdapter adapter;
     private List<StreamHolder> streamHolders = new ArrayList<>();
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-               switch (msg.what){
-                   case 0:
-                       adapter.notifyDataSetChanged();
-                       break;
-                   default:
-                       break;
-               }
+            switch (msg.what) {
+                case 0:
+                    adapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -88,29 +88,42 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         room = new WilddogRoom(roomId, new WilddogRoom.Listener() {
             @Override
             public void onConnected(WilddogRoom wilddogRoom) {
-                Toast.makeText(RoomActivity.this,"已经连接上服务器", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RoomActivity.this, "已经连接上服务器", Toast.LENGTH_SHORT).show();
                 // 此时服务器返回用户id
                 setLocalStreamId();
                 room.publish(localStream, new CompleteListener() {
                     @Override
-                    public void onComplete(WilddogVideoError wilddogVideoError) {
-                        if(wilddogVideoError!=null){
-                            //失败
-                            Toast.makeText(RoomActivity.this,"推送流失败", Toast.LENGTH_SHORT).show();
-                        }
+                    public void onComplete(final WilddogVideoError wilddogVideoError) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (wilddogVideoError != null) {
+                                    //失败
+                                    Log.e("error", "error:" + wilddogVideoError.getMessage());
+                                    Toast.makeText(RoomActivity.this, "推送流失败", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(RoomActivity.this, "推送流成功", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                     }
                 });
             }
 
             @Override
             public void onDisconnected(WilddogRoom wilddogRoom) {
-                Toast.makeText(RoomActivity.this,"服务器连接断开", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RoomActivity.this, "服务器连接断开", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
             @Override
             public void onStreamAdded(WilddogRoom wilddogRoom, RoomStream roomStream) {
-             room.subscribe(roomStream);
+                room.subscribe(roomStream, new CompleteListener() {
+                    @Override
+                    public void onComplete(WilddogVideoError wilddogVideoError) {
+                    }
+                });
             }
 
             @Override
@@ -122,7 +135,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onStreamReceived(WilddogRoom wilddogRoom, RoomStream roomStream) {
                 // 在控件中显示
-                StreamHolder holder = new StreamHolder(false, System.currentTimeMillis(),roomStream);
+                StreamHolder holder = new StreamHolder(false, System.currentTimeMillis(), roomStream);
                 holder.setId(roomStream.getStreamId());
                 streamHolders.add(holder);
                 handler.sendEmptyMessage(0);
@@ -134,18 +147,23 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void onError(WilddogRoom wilddogRoom, WilddogVideoError wilddogVideoError) {
-                Toast.makeText(RoomActivity.this,"发生错误,请产看日志", Toast.LENGTH_SHORT).show();
-                Log.e("error","错误码:"+wilddogVideoError.getErrCode()+",错误信息:"+wilddogVideoError.getMessage());
+            public void onError(WilddogRoom wilddogRoom, final WilddogVideoError wilddogVideoError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RoomActivity.this, "发生错误,请产看日志", Toast.LENGTH_SHORT).show();
+                        Log.e("error", "错误码:" + wilddogVideoError.getErrCode() + ",错误信息:" + wilddogVideoError.getMessage());
+                    }
+                });
+
             }
         });
         room.connect();
-
     }
 
     private void removeRemoteStream(long streamId) {
-        for(StreamHolder holder:streamHolders){
-            if(streamId==holder.getId()){
+        for (StreamHolder holder : streamHolders) {
+            if (streamId == holder.getId()) {
                 streamHolders.remove(holder);
                 break;
             }
@@ -153,9 +171,9 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setLocalStreamId() {
-        for(StreamHolder holder:streamHolders){
-            if(holder.isLocal()){
-               holder.setId(((LocalStream)holder.getStream()).getStreamId());
+        for (StreamHolder holder : streamHolders) {
+            if (holder.isLocal()) {
+                holder.setId(((LocalStream) holder.getStream()).getStreamId());
             }
         }
     }
@@ -164,13 +182,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
     private void initRoomSDK() {
         LogUtil.setLogLevel(Logger.Level.DEBUG);
         WilddogVideoInitializer.initialize(RoomActivity.this, Constants.WILDDOG_VIDEO_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
-        initializer =  WilddogVideoInitializer.getInstance();
-        initializer.addTokenListener(new WilddogVideoInitializer.TokenListener() {
-            @Override
-            public void onTokenChanged(String s) {
-
-            }
-        });
+        initializer = WilddogVideoInitializer.getInstance();
     }
 
     private void createLocalStream() {
@@ -179,7 +191,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         localStream.enableAudio(isAudioEnable);
         localStream.enableVideo(true);
         //将本地媒体流绑定到WilddogVideoView中
-        StreamHolder holder = new StreamHolder(true, System.currentTimeMillis(),localStream);
+        StreamHolder holder = new StreamHolder(true, System.currentTimeMillis(), localStream);
         streamHolders.add(holder);
         handler.sendEmptyMessage(0);
     }
@@ -197,26 +209,26 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         leave.setOnClickListener(this);
         gvStreams = (GridView) findViewById(R.id.gv_streams);
         gvStreams.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter = new MygridViewAdapter(this,streamHolders);
+        adapter = new MygridViewAdapter(this, streamHolders);
         gvStreams.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_flip_camera:
-                if(localStream!=null){
+                if (localStream != null) {
                     localStream.switchCamera();
                 }
                 break;
             case R.id.btn_operation_mic:
-                if(localStream!=null){
+                if (localStream != null) {
                     isAudioEnable = !isAudioEnable;
                     localStream.enableAudio(isAudioEnable);
                 }
                 break;
             case R.id.btn_operation_video:
-                if(localStream!=null){
+                if (localStream != null) {
                     isVideoEnable = !isVideoEnable;
                     localStream.enableAudio(isVideoEnable);
                 }
@@ -229,12 +241,13 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public class  MygridViewAdapter extends BaseAdapter {
+    public class MygridViewAdapter extends BaseAdapter {
         private List<StreamHolder> mlist;
         private Context mContext;
-        MygridViewAdapter(Context context, List<StreamHolder> list){
-        mContext = context;
-        mlist = list;
+
+        MygridViewAdapter(Context context, List<StreamHolder> list) {
+            mContext = context;
+            mlist = list;
         }
 
         @Override
@@ -256,32 +269,36 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder holder;
             StreamHolder streamHolder = mlist.get(i);
-            if(view==null){
-                view = View.inflate(mContext,R.layout.listitem_video,null);
+            if (view == null) {
+                view = View.inflate(mContext, R.layout.listitem_video, null);
                 holder = new ViewHolder();
                 holder.wilddogVideoView = (WilddogVideoView) view.findViewById(R.id.wvv_video);
                 view.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) view.getTag();
             }
-            if(streamHolder.isLocal()){
+            if (streamHolder.isLocal()) {
                 // 本地流detach 需要时间,频繁detach再attach,可能detach完成在attch之后,导致本地视频画面卡住,所以如果是本地流attch之后就不反复操作了
-                if(isLocalAttach ==false){
+                if (isLocalAttach == false) {
+                    streamHolder.getStream().attach(holder.wilddogVideoView);
+                    isLocalAttach = true;
+                }
+            } else {
+                streamHolder.getStream().detach();
                 streamHolder.getStream().attach(holder.wilddogVideoView);
-                isLocalAttach = true;}
-            }else {
-            streamHolder.getStream().detach();
-            streamHolder.getStream().attach(holder.wilddogVideoView);}
+            }
             return view;
         }
-        class ViewHolder{
+
+        class ViewHolder {
             WilddogVideoView wilddogVideoView;
         }
     }
-    private void leaveRoom(){
-        if(room!=null){
+
+    private void leaveRoom() {
+        if (room != null) {
             room.disconnect();
-            room=null;
+            room = null;
         }
     }
 
@@ -289,7 +306,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         leaveRoom();
-        if(!localStream.isClosed()){
+        if (!localStream.isClosed()) {
             localStream.close();
         }
     }
