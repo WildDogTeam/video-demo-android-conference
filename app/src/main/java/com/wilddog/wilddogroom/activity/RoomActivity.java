@@ -62,7 +62,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean isLocalAttach = false;
 
-    private MygridViewAdapter adapter;
+    private MyGridViewAdapter adapter;
     private List<StreamHolder> streamHolders = new ArrayList<>();
     private HashMap<String, TextView> mMapView = new HashMap<>();
 
@@ -226,7 +226,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         monitorView = (LinearLayout) findViewById(R.id.ll_monitor);
         gvStreams = (GridView) findViewById(R.id.gv_streams);
         gvStreams.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter = new MygridViewAdapter(this, streamHolders);
+        adapter = new MyGridViewAdapter(this, streamHolders);
         gvStreams.setAdapter(adapter);
     }
 
@@ -274,11 +274,11 @@ public class RoomActivity extends AppCompatActivity implements View.OnClickListe
         tv.setText(tvResult);
     }
 
-    public class MygridViewAdapter extends BaseAdapter {
+    public class MyGridViewAdapter extends BaseAdapter {
         private List<StreamHolder> mlist;
         private Context mContext;
 
-        MygridViewAdapter(Context context, List<StreamHolder> list) {
+        MyGridViewAdapter(Context context, List<StreamHolder> list) {
             mContext = context;
             mlist = list;
         }
